@@ -1,0 +1,29 @@
+{
+  "name": "core_backend",
+  "version": "1.0.0",
+  "description": "core backend service for the consent layer application",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "prisma:generate": "npx prisma generate  --schema=src/infrastructure/db/prisma/schema.prisma",
+    "prisma:migrate": "npx prisma migrate dev --schema=src/infrastructure/db/prisma/schema.prisma",
+    "prisma:studio": "npx prisma studio --schema=src/infrastructure/db/prisma/schema.prisma"
+  },
+  "author": "Deepansh",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "@types/express": "^5.0.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.29",
+    "prisma": "^6.8.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
