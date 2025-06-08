@@ -47,4 +47,14 @@ export class PgOrganisationRepository implements IOrganisationRepository {
     const all = await prisma.organization.findMany();
     return all.map(org => new Organization(org.id, org.name, org.createdAt, org.updatedAt));
   }
+
+  async findBySlug(slug: string): Promise<Organization | null> {
+  const found = await prisma.organization.findUnique({ where: { slug } });
+  return found ? new Organization(
+    found.id, found.name, found.createdAt, found.updatedAt,
+    found.dbName, found.dbHost, found.dbUser, found.dbPassword,
+    found.dbPort, found.dbSchema
+  ) : null;
+}
+
 }

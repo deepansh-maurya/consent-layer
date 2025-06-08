@@ -5,7 +5,7 @@ export class APIKey {
     public orgId: string,
     public key: string,
     public createdAt: Date,
-    public lastUsedAt: Date | null,
+    public lastUsedAt: Date | null | number,
     public revoked: boolean,
   ) {}
 

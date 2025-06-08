@@ -1,9 +1,11 @@
-import { AdminUser } from "../../../domain/admin_user";
-import { IAdminUserRepository } from "../../../domain/repositories/IAdminUserRepository";
+// src/application/use_cases/api_key/listAll.ts
 
-export default function listAdminUsersByOrg(
+import { APIKey } from "../../../domain/api_key";
+import { IApiKeyRepository } from "../../../domain/repositories/IApiKeyRepository";
+
+export default async function listApiKeysByOrg(
   orgId: string,
-  repoCtx: { adminUserRepository: IAdminUserRepository }
-): Promise<AdminUser[]> {
-  return repoCtx.adminUserRepository.listByOrg(orgId);
+  { apiKeyRepository }: { apiKeyRepository: IApiKeyRepository }
+): Promise<APIKey[]> {
+  return apiKeyRepository.listByOrg(orgId);
 }

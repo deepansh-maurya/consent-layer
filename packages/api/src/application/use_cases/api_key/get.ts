@@ -1,9 +1,11 @@
-import { AdminUser } from "../../../domain/admin_user";
-import { IAdminUserRepository } from "../../../domain/repositories/IAdminUserRepository";
+// src/application/use_cases/api_key/get.ts
 
-export default function getAdminUserById(
-  adminUserId: string,
-  repoCtx: { adminUserRepository: IAdminUserRepository }
-): Promise<AdminUser | null> {
-  return repoCtx.adminUserRepository.findById(adminUserId);
+import { APIKey } from "../../../domain/api_key";
+import { IApiKeyRepository } from "../../../domain/repositories/IApiKeyRepository";
+
+export default async function getApiKeyById(
+  apiKeyId: string,
+  { apiKeyRepository }: { apiKeyRepository: IApiKeyRepository }
+): Promise<APIKey | null> {
+  return apiKeyRepository.findById(apiKeyId);
 }

@@ -1,58 +1,73 @@
 import { Request, Response } from "express";
-import { ConsentEvent } from "../../domain/consent_event";
-import { MongoConsentEventRepository } from "../../infrastructure/repositories/mongodb/PgConsentEventRepository";
+import { ServiceLocator } from "../../infrastructure/config/service-locator";
+import logConsentEvent from "../../application/use_cases/consent_event/create";
+import listConsentEventsByUser, { listConsentEventsByOrg, listConsentEventsByType } from "../../application/use_cases/consent_event/get";
+import listAllConsentEvents from "../../application/use_cases/consent_event/listAll";
+import { consentEventSerializer } from "../serializers/consentEventSerializer";
 
-const consentRepo = new MongoConsentEventRepository();
-
+// Log a new consent event
 export async function logConsentEventController(req: Request, res: Response) {
-  try {
-    const {
-      orgId, userId, categories, timestamp, userAgent, ipAddress, eventType
-    } = req.body;
-
-    const event = new ConsentEvent(
-      null, // Mongo will assign ID
-      orgId,
-      userId,
-      categories,
-      timestamp ? new Date(timestamp) : new Date(),
-      userAgent,
-      ipAddress,
-      eventType
-    );
-    const saved = await consentRepo.logEvent(event);
-    res.status(201).json(saved);
-  } catch (e) {
-    res.status(400).json({ error: (e as Error).message });
-  }
+    try {
+        const { orgId, userId, categories, userAgent, ipAddress, eventType } = req.body;
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const event = await logConsentEvent(
+            orgId,
+            userId,
+            categories,
+            userAgent,
+            ipAddress,
+            eventType,
+            serviceLocator
+        );
+        res.status(201).json(consentEventSerializer.serialize(event));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
 }
 
-export async function getConsentEventsByOrgController(req: Request, res: Response) {
-  try {
-    const { orgId } = req.params;
-    const events = await consentRepo.findByOrg(orgId);
-    res.json(events);
-  } catch (e) {
-    res.status(400).json({ error: (e as Error).message });
-  }
+// List all events for an org
+export async function listConsentEventsByOrgController(req: Request, res: Response) {
+    try {
+        const { orgId } = req.query as { orgId: string };
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const events = await listConsentEventsByOrg(orgId, serviceLocator);
+        res.json(events.map(consentEventSerializer.serialize));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
 }
 
-export async function getConsentEventsByUserController(req: Request, res: Response) {
-  try {
-    const { orgId, userId } = req.params;
-    const events = await consentRepo.findByUser(orgId, userId);
-    res.json(events);
-  } catch (e) {
-    res.status(400).json({ error: (e as Error).message });
-  }
+// List all events for a user in an org
+export async function listConsentEventsByUserController(req: Request, res: Response) {
+    try {
+        const { orgId, userId } = req.query as { orgId: string; userId: string };
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const events = await listConsentEventsByUser(orgId, userId, serviceLocator);
+        res.json(events.map(consentEventSerializer.serialize));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
 }
 
-export async function getConsentEventsByTypeController(req: Request, res: Response) {
-  try {
-    const { orgId, type } = req.params;
-    const events = await consentRepo.findByType(orgId, type);
-    res.json(events);
-  } catch (e) {
-    res.status(400).json({ error: (e as Error).message });
-  }
+// List events by type in an org
+export async function listConsentEventsByTypeController(req: Request, res: Response) {
+    try {
+        const { orgId, eventType } = req.query as { orgId: string; eventType: string };
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const events = await listConsentEventsByType(orgId, eventType as any, serviceLocator);
+        res.json(events.map(consentEventSerializer.serialize));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
+}
+
+// List all consent events in the system
+export async function listAllConsentEventsController(req: Request, res: Response) {
+    try {
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const events = await listAllConsentEvents(serviceLocator);
+        res.json(events.map(consentEventSerializer.serialize));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
 }

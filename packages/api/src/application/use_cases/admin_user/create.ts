@@ -7,6 +7,7 @@ export default async function createAdminUser(
   orgId: string,
   email: string,
   passwordHash: string,
+  salt: string,
   role: 'owner' | 'admin' | 'viewer',
   repoCtx: { adminUserRepository: IAdminUserRepository }
 ): Promise<AdminUser> {
@@ -18,7 +19,8 @@ export default async function createAdminUser(
     passwordHash,
     role,
     now,
-    now
+    now,
+    salt,
   );
   return repoCtx.adminUserRepository.create(adminUser);
 }

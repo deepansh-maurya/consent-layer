@@ -1,13 +1,20 @@
 import { Router } from "express";
-import { createUserSessionController, deleteUserSessionController, getUserSessionByIdController, getUserSessionsByUserController, updateUserSessionController } from "../controllers/UserSessionController";
+import {
+  createUserSessionController,
+  getUserSessionByIdController,
+  listUserSessionsByUserController,
+  updateUserSessionController,
+  deleteUserSessionController
+} from "../controllers/UserSessionController";
+import { apiKeyAuth } from "../../infrastructure/security/AuthForApiKey";
 
+// All routes prefixed with /user-sessions
+const userSessionRouter = Router();
 
-const router = Router();
+userSessionRouter.post("/", apiKeyAuth, createUserSessionController);  // POST   /user-sessions
+userSessionRouter.get("/:id", apiKeyAuth, getUserSessionByIdController); // GET /user-sessions/:id
+userSessionRouter.get("/org/:orgId/user/:userId", apiKeyAuth, listUserSessionsByUserController); // GET /user-sessions/org/:orgId/user/:userId
+userSessionRouter.put("/:id", apiKeyAuth, updateUserSessionController); // PUT /user-sessions/:id
+userSessionRouter.delete("/:id", apiKeyAuth, deleteUserSessionController); // DELETE /user-sessions/:id
 
-router.post("/", createUserSessionController);
-router.get("/:id", getUserSessionByIdController);
-router.get("/org/:orgId/user/:userId", getUserSessionsByUserController);
-router.put("/:id", updateUserSessionController);
-router.delete("/:id", deleteUserSessionController);
-
-export default router;
+export default userSessionRouter;

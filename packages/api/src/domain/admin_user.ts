@@ -8,7 +8,8 @@ export class AdminUser {
     public role: 'owner' | 'admin' | 'viewer',
     public createdAt: Date,
     public updatedAt: Date,
-  ) {}
+    public salt?: string,
+      ) {}
 
   changeRole(newRole: 'owner' | 'admin' | 'viewer') {
     this.role = newRole;

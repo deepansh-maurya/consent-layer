@@ -9,4 +9,5 @@ export interface IOrganisationRepository {
   update(org: Organization): Promise<Organization>;
   delete(id: string): Promise<void>;
   list(): Promise<Organization[]>;
+  findBySlug(slug: string): Promise<Organization | null>;
 }

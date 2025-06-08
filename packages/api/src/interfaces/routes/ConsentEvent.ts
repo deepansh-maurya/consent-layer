@@ -1,12 +1,20 @@
 import { Router } from "express";
-import { getConsentEventsByOrgController, getConsentEventsByTypeController, getConsentEventsByUserController, logConsentEventController } from "../controllers/ConsentEventController";
+import {
+  logConsentEventController,
+  listConsentEventsByOrgController,
+  listConsentEventsByUserController,
+  listConsentEventsByTypeController,
+  listAllConsentEventsController
+} from "../controllers/ConsentEventController";
+import { apiKeyAuth } from "../../infrastructure/security/AuthForApiKey";
 
+// Using "/consent-events" as base path
+const consentEventRouter = Router();
 
-const router = Router();
+consentEventRouter.post("/", apiKeyAuth, logConsentEventController);                   // POST   /consent-events
+consentEventRouter.get("/", apiKeyAuth, listAllConsentEventsController);               // GET    /consent-events
+consentEventRouter.get("/org/:orgId", apiKeyAuth, listConsentEventsByOrgController);   // GET    /consent-events/org/:orgId
+consentEventRouter.get("/user", apiKeyAuth, listConsentEventsByUserController);        // GET    /consent-events/user?orgId=...&userId=...
+consentEventRouter.get("/type", apiKeyAuth, listConsentEventsByTypeController);        // GET    /consent-events/type?orgId=...&eventType=...
 
-router.post("/", logConsentEventController);
-router.get("/org/:orgId", getConsentEventsByOrgController);
-router.get("/org/:orgId/user/:userId", getConsentEventsByUserController);
-router.get("/org/:orgId/type/:type", getConsentEventsByTypeController);
-
-export default router;
+export default consentEventRouter;
