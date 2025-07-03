@@ -1,8 +1,8 @@
-import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
-import HowItWorks from "../components/HowItWorks";
-import PricingSection from "../components/PricingSection";
-import SignupForm from "../components/SignupForm";
+import Navbar from "./components/nav_bar/Navbar";
+import HeroSection from "./components/hero_section/HeroSection";
+import HowItWorks from "./components/how_it_works/HowItWorks";
+import PricingSection from "./components/pricing_section/PricingSection";
+import SignupForm from "./register/page";
 
 export default function Home() {
   return (

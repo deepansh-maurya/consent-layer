@@ -1,0 +1,206 @@
+/* SignupForm.css */
+.signup-form {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  padding: 4rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form__overlay {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  z-index: 1;
+}
+
+.signup-form__container {
+  max-width: 32rem;
+  width: 100%;
+  padding: 0 1.5rem;
+  position: relative;
+  top: 40px;
+  bottom: 60px;
+  z-index: 2;
+}
+
+.signup-form__form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.signup-form__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.signup-form__intro {
+  color: #d1d5db;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.signup-form__field {
+  margin-bottom: 1.5rem;
+}
+
+.signup-form__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #d1d5db;
+  margin-bottom: 0.5rem;
+}
+
+.signup-form__input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-form__input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.signup-form__error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.signup-form__button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.signup-form__button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+  transform: scale(1.05);
+}
+
+.signup-form__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.signup-form__terms {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  margin-top: 1rem;
+}
+
+.signup-form__link {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.signup-form__link:hover {
+  color: #60a5fa;
+}
+
+.signup-form__success {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 32rem;
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.signup-form__success-icon {
+  font-size: 2.5rem;
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+
+.signup-form__success-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.signup-form__success-message {
+  color: #d1d5db;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.signup-form__success-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.signup-form__success-button:hover {
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .signup-form {
+    padding: 2rem 1rem;
+  }
+  .signup-form__title {
+    font-size: 1.5rem;
+  }
+  .signup-form__intro {
+    font-size: 0.875rem;
+  }
+}
