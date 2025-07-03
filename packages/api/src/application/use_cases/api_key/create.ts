@@ -5,10 +5,15 @@ import { APIKey } from "../../../domain/api_key";
 import { IApiKeyRepository } from "../../../domain/repositories/IApiKeyRepository";
 import { hashApiKey } from "../../../utils/utils";
 
+function addDays(date: Date, days: number): Date {
+  const copy = new Date(date);
+  copy.setDate(copy.getDate() + days);
+  return copy;
+}
 
 export default async function createApiKey(
   orgId: string,
-  expiresAt: Date | null | number,
+  lastUsedAt: Date | null | number,
   { apiKeyRepository }: { apiKeyRepository: IApiKeyRepository }
 ): Promise<{ apiKey: APIKey; rawKey: string }> {
   // Generate a secure API key string
@@ -16,13 +21,15 @@ export default async function createApiKey(
 
   // Hash the API key for storage
   const apiKeyHash = hashApiKey(rawApiKey);
-
   const now = new Date();
+  const expiresAt = addDays(now, 30); // Expires in 30 days
+
   const apiKey = new APIKey(
     uuidv4(),          // id
     orgId,
     apiKeyHash,        // store the hash, NOT the raw key!
     now,
+    lastUsedAt,
     expiresAt,
     true
   );

@@ -6,8 +6,9 @@ export class APIKey {
     public key: string,
     public createdAt: Date,
     public lastUsedAt: Date | null | number,
+    public expiresAt: Date,
     public revoked: boolean,
-  ) {}
+  ) { }
 
   revoke() {
     this.revoked = true;

@@ -30,7 +30,7 @@ export async function createAdminUserController(req: Request, res: Response) {
 
 export async function listAdminUsersByOrgController(req: Request, res: Response) {
     try {
-        const { orgId } = req.query as { orgId: string };
+        const { orgId } = req.query as { orgId: string };   
         const serviceLocator = req.app.locals as ServiceLocator;
 
         const adminUsers = await listAdminUsersByOrg(orgId, serviceLocator);

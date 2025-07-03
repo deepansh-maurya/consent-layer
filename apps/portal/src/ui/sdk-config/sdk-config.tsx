@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import { ClipboardList, FileEdit, ListChecks, Copy, Save, Power, PowerOff } from "lucide-react";
+import Sidebar from "@/src/components/sidebar";
 
 // Interfaces for type safety
 interface SDKConfig {
@@ -197,31 +198,7 @@ const Sdkconfig: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-tr from-slate-900 via-slate-950 to-slate-800 flex">
       {/* Sidebar */}
-      <aside className="w-60 min-h-screen bg-white/10 backdrop-blur-xl border-r border-white/10 shadow-lg flex flex-col py-6 px-4">
-        <div className="flex items-center gap-3 mb-10 px-2">
-          <ClipboardList className="text-white w-8 h-8" />
-          <span className="text-white font-bold text-xl">ConsentLayer</span>
-        </div>
-        <nav className="flex flex-col gap-2 text-white/80">
-          <a href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/10 transition">
-            <ListChecks className="w-5 h-5" />
-            <span>Dashboard</span>
-          </a>
-          <a href="/sdk-config" className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/20 text-white">
-            <FileEdit className="w-5 h-5" />
-            <span>SDK Config</span>
-          </a>
-          <a href="/consent-logs" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/10 transition">
-            <ClipboardList className="w-5 h-5" />
-            <span>Consent Logs</span>
-          </a>
-        </nav>
-        <div className="flex-1" />
-        <button className="flex items-center gap-2 px-3 py-2 mt-8 text-red-400 hover:bg-red-900/40 rounded-xl transition">
-          {/* <LogOut className="w-5 h-5" /> */}
-          <span className="font-medium">Logout</span>
-        </button>
-      </aside>
+    <Sidebar />
 
       {/* Main */}
       <main className="flex-1 flex flex-col min-h-screen px-3 md:px-8 py-8">

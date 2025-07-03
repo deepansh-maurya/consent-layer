@@ -1,7 +1,5 @@
 import { AdminUser } from "../../../domain/admin_user";
 import { IAdminUserRepository } from "../../../domain/repositories/IAdminUserRepository";
-import { PgAdminUserRepository } from "../../../infrastructure/repositories/postgres/PgAdminUserRepository";
-
 
 export default async function createAdminUser(
   orgId: string,
@@ -22,5 +20,5 @@ export default async function createAdminUser(
     now,
     salt,
   );
-  return repoCtx.adminUserRepository.create(adminUser);
+  return await repoCtx.adminUserRepository.create(adminUser);
 }

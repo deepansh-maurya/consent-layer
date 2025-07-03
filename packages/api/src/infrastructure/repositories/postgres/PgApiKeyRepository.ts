@@ -35,13 +35,10 @@ export class PgApiKeyRepository implements IApiKeyRepository {
     return all.map(this.toDomain);
   }
 
-  async update(apiKey: APIKey): Promise<APIKey> {
+  async update(id: string,data:APIKey): Promise<APIKey> {
     const updated = await prisma.apiKey.update({
-      where: { id: apiKey.id },
-      data: {
-        lastUsedAt: apiKey.lastUsedAt,
-        revoked: apiKey.revoked,
-      },
+      where: { id:id },
+      data: data,
     });
     return this.toDomain(updated);
   }
@@ -60,6 +57,7 @@ export class PgApiKeyRepository implements IApiKeyRepository {
       prismaApiKey.key,
       prismaApiKey.createdAt,
       prismaApiKey.lastUsedAt,
+      prismaApiKey.expiresAt,
       prismaApiKey.revoked
     );
   }

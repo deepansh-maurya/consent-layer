@@ -5,13 +5,15 @@ import listApiKeysByOrg from "../../application/use_cases/api_key/listAll";
 import { ServiceLocator } from "../../infrastructure/config/service-locator";
 import deleteApiKey from "../../application/use_cases/api_key/revoke";
 import { apiKeySerializer } from "../serializers/apiKeySerializer";
+import updateApiKey from "../../application/use_cases/api_key/update";
+
 export async function createApiKeyController(req: Request, res: Response) {
     try {
-        const { orgId, expiresAt } = req.body;
+        const { orgId, lastUsedAt } = req.body;
         const serviceLocator = req.app.locals as ServiceLocator;
 
         // Now returns { apiKey, rawKey }
-        const { apiKey, rawKey } = await createApiKey(orgId, expiresAt, serviceLocator);
+        const { apiKey, rawKey } = await createApiKey(orgId, lastUsedAt, serviceLocator);
 
         res.status(201).json({
             apiKey: apiKeySerializer.serialize(apiKey),
@@ -56,6 +58,20 @@ export async function deleteApiKeyController(req: Request, res: Response) {
         const serviceLocator = req.app.locals as ServiceLocator;
         await deleteApiKey(id, serviceLocator);
         res.status(204).send();
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
+}
+
+export async function updateApiKeyController(req: Request, res: Response) {
+    try {
+        const { lastUsedAt, id } = req.body
+        const serviceLocator = req.app.locals as ServiceLocator;
+
+        const apikey = await updateApiKey(lastUsedAt, id, serviceLocator)
+        res.status(201).json({
+            apiKey: apiKeySerializer.serialize(apikey),
+        });
     } catch (e) {
         res.status(400).json({ error: (e as Error).message });
     }

@@ -17,12 +17,11 @@ export default async function updateAdminUser(
 ): Promise<AdminUser> {
   const adminUser = await repoCtx.adminUserRepository.findById(adminUserId);
   if (!adminUser) throw new Error('Admin user not found');
-
   if (updates.email) adminUser.email = updates.email;
   if (updates.passwordHash) adminUser.passwordHash = updates.passwordHash;
   if (updates.role) adminUser.changeRole(updates.role);
 
   adminUser.updatedAt = new Date();
 
-  return repoCtx.adminUserRepository.update(adminUser);
+  return await repoCtx.adminUserRepository.update(adminUser);
 }

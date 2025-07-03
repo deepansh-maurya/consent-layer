@@ -4,7 +4,6 @@ import { AdminUser } from "../../../domain/admin_user";
 import { IAdminUserRepository } from "../../../domain/repositories/IAdminUserRepository";
 import { prisma } from "../../db/prisma/prisma";
 
-
 export class PgAdminUserRepository implements IAdminUserRepository {
   async create(user: AdminUser): Promise<AdminUser> {
     const created = await prisma.adminUser.create({
@@ -30,7 +29,7 @@ export class PgAdminUserRepository implements IAdminUserRepository {
     const found = await prisma.adminUser.findUnique({ where: { email } });
     return found ? this.toDomain(found) : null;
   }
-
+  
   async update(user: AdminUser): Promise<AdminUser> {
     const updated = await prisma.adminUser.update({
       where: { id: user.id },

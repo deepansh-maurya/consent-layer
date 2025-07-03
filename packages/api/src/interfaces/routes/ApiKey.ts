@@ -3,7 +3,8 @@ import {
   createApiKeyController,
   listApiKeysByOrgController,
   getApiKeyByIdController,
-  deleteApiKeyController
+  deleteApiKeyController,
+  updateApiKeyController
 } from "../controllers/ApiKeyController";
 import { authOrgUser } from "../../infrastructure/security/AuthOrgUser";
 
@@ -14,5 +15,6 @@ apiKeyRouter.post("/",authOrgUser, createApiKeyController);                   //
 apiKeyRouter.get("/",authOrgUser, listApiKeysByOrgController);                // GET    /api-keys?orgId=...
 apiKeyRouter.get("/:id",authOrgUser, getApiKeyByIdController);                // GET    /api-keys/:id
 apiKeyRouter.delete("/:id",authOrgUser, deleteApiKeyController);              // DELETE /api-keys/:id
+apiKeyRouter.put('/',authOrgUser,updateApiKeyController)
 
 export default apiKeyRouter;
