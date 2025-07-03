@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ServiceLocator } from "../../infrastructure/config/service-locator";
 import { organizationSerializer } from "../serializers/organizationSerializer";
-import getOrganizationById, { getOrganizationByName } from "../../application/use_cases/organisation/get";
+import getOrganizationById, { findOrganizationBySlug, getOrganizationByName } from "../../application/use_cases/organisation/get";
 import updateOrganization from "../../application/use_cases/organisation/update";
 import deleteOrganization from "../../application/use_cases/organisation/delete";
 import listOrganizations from "../../application/use_cases/organisation/listAll";
@@ -90,6 +90,21 @@ export async function listOrganizationsController(req: Request, res: Response) {
         const serviceLocator = req.app.locals as ServiceLocator;
         const orgs = await listOrganizations(serviceLocator);
         res.json(orgs.map(organizationSerializer.serialize));
+    } catch (e) {
+        res.status(400).json({ error: (e as Error).message });
+    }
+}
+
+export async function listOrgBySlug(req: Request, res: Response) {
+    try {
+        const { slug } = req.params
+        const serviceLocator = req.app.locals as ServiceLocator;
+        const org = await findOrganizationBySlug(slug, serviceLocator)
+        if (!org) {
+            res.status(404).json({ error: "Organization not found" });
+            return;
+        }
+        res.json(organizationSerializer.serialize(org));
     } catch (e) {
         res.status(400).json({ error: (e as Error).message });
     }

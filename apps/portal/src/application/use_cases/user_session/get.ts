@@ -1,5 +1,5 @@
 // src/application/use_cases/user_session/getById.ts
-import { UserSession } from "../../../domain/user_session";
+import { UserSession } from "@/src/domain/user_session";
 import type { IUserSessionRepository } from "../../../domain/repositories/IUserSessionRepository";
 
 export default function getUserSessionById(

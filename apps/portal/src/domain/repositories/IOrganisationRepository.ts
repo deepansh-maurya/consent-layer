@@ -3,11 +3,11 @@
 import { Organization } from "../organisation";
 
 export interface IOrganisationRepository {
-  create(org: Organization): Promise<Organization>;
+  create(org: string): Promise<Organization>;
   findById(id: string): Promise<Organization | null>;
   findByName(name: string): Promise<Organization | null>;
-  update(org: Organization): Promise<Organization>;
+  update(id:string,org: Organization): Promise<Organization>;
   delete(id: string): Promise<void>;
-  list(): Promise<Organization[]>;
+  // list(): Promise<Organization[]>;
   findBySlug(slug: string): Promise<Organization | null>;
 }

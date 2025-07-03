@@ -1,5 +1,5 @@
 // src/application/use_cases/user_session/update.ts
-import { UserSession } from "../../../domain/user_session";
+import { UserSession } from "@/src/domain/user_session";
 import type { IUserSessionRepository } from "../../../domain/repositories/IUserSessionRepository";
 
 export default async function updateUserSession(
@@ -10,5 +10,5 @@ export default async function updateUserSession(
   const existing = await userSessionRepository.findById(id);
   if (!existing) throw new Error("User session not found");
   existing.updateConsent(newConsentStatus);
-  return userSessionRepository.update(existing);
+  return userSessionRepository.update(id,existing);
 }

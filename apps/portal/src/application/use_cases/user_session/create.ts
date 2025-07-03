@@ -1,7 +1,7 @@
 // src/application/use_cases/user_session/create.ts
-import { UserSession } from "../../../domain/user_session";
 import { v4 as uuidv4 } from "uuid";
 import type { IUserSessionRepository } from "../../../domain/repositories/IUserSessionRepository";
+import { UserSession } from "@/src/domain/user_session";
 
 export default async function createUserSession(
   orgId: string,

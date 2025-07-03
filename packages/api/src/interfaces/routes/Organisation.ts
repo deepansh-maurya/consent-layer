@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrganizationController, deleteOrganizationController, getOrganizationByIdController, getOrganizationByNameController, listOrganizationsController, updateOrganizationController } from "../controllers/OrganisationController";
+import { createOrganizationController, deleteOrganizationController, getOrganizationByIdController, getOrganizationByNameController, listOrganizationsController, listOrgBySlug, updateOrganizationController } from "../controllers/OrganisationController";
 import { authOrgUser } from "../../infrastructure/security/AuthOrgUser";
 // Router for /organizations
 const organizationRouter = Router();
@@ -11,5 +11,6 @@ organizationRouter.get("/by-name",authOrgUser, getOrganizationByNameController);
 organizationRouter.put("/:id",authOrgUser, updateOrganizationController);// Delete organization
 organizationRouter.delete("/:id",authOrgUser, deleteOrganizationController);// List all organizations
 organizationRouter.get("/",authOrgUser, listOrganizationsController);
+organizationRouter.get("/slug/:slug",authOrgUser, listOrgBySlug);
 
 export default organizationRouter;

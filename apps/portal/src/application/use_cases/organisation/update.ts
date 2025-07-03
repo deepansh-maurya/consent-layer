@@ -13,7 +13,7 @@ type OrgUpdateFields = {
 
 export default async function updateOrganization(
   id: string,
-  updates: OrgUpdateFields,
+  updates: OrgUpdateFields, 
   { organisationRepository }: { organisationRepository: IOrganisationRepository }
 ): Promise<Organization> {
   const existing = await organisationRepository.findById(id);
@@ -29,5 +29,5 @@ export default async function updateOrganization(
   if (updates.dbSchema !== undefined) existing.dbSchema = updates.dbSchema;
 
   existing.updatedAt = new Date();
-  return organisationRepository.update(existing);
+  return organisationRepository.update(id,existing);
 }

@@ -14,5 +14,5 @@ export default async function updateSdkConfig(
   if (typeof updates.isActive === "boolean") existing.isActive = updates.isActive;
   existing.updatedAt = new Date();
 
-  return sdkConfigRepository.update(existing);
+  return sdkConfigRepository.update(id,existing);
 }

@@ -8,7 +8,7 @@ export interface ISdkConfigRepository {
   findById(id: string): Promise<SDKConfig | null>;
   findActiveByOrg(orgId: string): Promise<SDKConfig | null>;
   listByOrg(orgId: string): Promise<SDKConfig[]>;
-  update(config: SDKConfig): Promise<SDKConfig>;
+  update(id:string,config: SDKConfig): Promise<SDKConfig>;
   deactivateAll(orgId: string): Promise<void>;
 }
     
