@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./SignupForm.css";
 import Navbar from "../components/nav_bar/Navbar";
+import { OrganisationHandler } from "@/src/interfaces/handlers/organisationHandler";
 
 // Define interfaces for type safety
 interface Signup {
@@ -15,7 +16,7 @@ interface Signup {
 
 // Mock country options (ISO 3166-1 alpha-2 codes for simplicity)
 const countries = [
-  { value: "", label: "Select Country/Region (Optional)" },
+  { value: "", label: "Select Country/Region" },
   { value: "US", label: "United States" },
   { value: "GB", label: "United Kingdom" },
   { value: "CA", label: "Canada" },
@@ -78,7 +79,16 @@ const SignupForm: React.FC = () => {
     e.preventDefault();
     if (!validateForm()) return;
     setLoading(true);
-    // Simulate API call
+
+    const result = await OrganisationHandler.createOrganizationController(
+      data.org,
+      data.adminName,
+      data.email,
+      data.website,
+      data.country,
+      data.password
+    );
+
     setTimeout(() => {
       setLoading(false);
       setDone(true);
@@ -156,7 +166,7 @@ const SignupForm: React.FC = () => {
           </div>
           <div className="signup-form__field">
             <label className="signup-form__label" htmlFor="adminName">
-              Admin Name
+              Admin Name (owner)
             </label>
             <input
               name="adminName"
@@ -209,7 +219,7 @@ const SignupForm: React.FC = () => {
           </div>
           <div className="signup-form__field">
             <label className="signup-form__label" htmlFor="country">
-              Country/Region (Optional)
+              Country/Region 
             </label>
             <select
               name="country"
