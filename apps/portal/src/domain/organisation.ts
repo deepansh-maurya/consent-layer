@@ -4,6 +4,9 @@ export class Organization {
         public name: string,
         public createdAt: Date,
         public updatedAt: Date,
+        public slug: string,
+        public url?: string,
+        public country?: string,
         // Multitenancy: Org's DB connection info
         public dbName?: string,
         public dbHost?: string,
@@ -11,7 +14,6 @@ export class Organization {
         public dbPassword?: string,
         public dbPort?: number,    // optional
         public dbSchema?: string,  // optional
-        public slug?: string
 
     ) { }
 }

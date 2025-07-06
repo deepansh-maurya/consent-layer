@@ -7,7 +7,8 @@ export default async function createAdminUser(
   passwordHash: string,
   salt: string,
   role: 'owner' | 'admin' | 'viewer',
-  repoCtx: { adminUserRepository: IAdminUserRepository }
+  repoCtx: { adminUserRepository: IAdminUserRepository },
+  name?:string
 ): Promise<AdminUser> {
   const now = new Date();
   const adminUser = new AdminUser(

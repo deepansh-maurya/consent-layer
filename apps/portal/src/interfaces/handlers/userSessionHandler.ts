@@ -5,10 +5,6 @@ import { listUserSessionsByUser } from "@/src/application/use_cases/user_session
 import updateUserSession from "@/src/application/use_cases/user_session/update";
 import { buildBeans } from "@/src/infrastructure/config/service-locator";
 
-
-
-
-
 export class UserSessionHandler {
 
     // Create

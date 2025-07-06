@@ -5,35 +5,46 @@ import { createDatabaseForOrg, runMigrationsOnOrgDb } from "../../../interfaces/
 import updateOrganization from "./update";
 import { buildBeans } from "../../../infrastructure/config/service-locator";
 
+function slugify(name: string) {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 // This function handles org + db creation
 export async function createOrganizationWithDb(
   name: string,
-  { organisationRepository }: { organisationRepository: IOrganisationRepository }
+  { organisationRepository }: { organisationRepository: IOrganisationRepository },
+  url: string,
+  country: string,
 ): Promise<Organization> {
   const now = new Date();
   const orgId = uuidv4();
 
-  // 1. Generate org DB credentials (here using the same creds for every org DB, you can randomize per org if you wish)
   const dbHost = process.env.DB_HOST || "localhost";
   const dbUser = process.env.DB_USER || "postgres";
   const dbPassword = process.env.DB_PASSWORD || "your_pg_password";
   const dbPort = process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432;
   const dbName = `org_${orgId.replace(/-/g, "")}`;
 
-  // 2. Save org in main db (without db connection info yet)
-  let org = new Organization(orgId, name, now, now);
+  let baseSlug = slugify(name);
+  let slug = baseSlug;
+  let count = 1;
 
+  while (await organisationRepository.findBySlug(slug)) {
+    slug = `${baseSlug}-${count++}`;
+  }
+
+  let org = new Organization(orgId, name, now, now, slug, url, country);
   org = await organisationRepository.create(org);
 
-  // 3. Create new DB for the org (catch error if DB already exists)
   await createDatabaseForOrg(dbName, dbHost, dbUser, dbPassword, dbPort);
 
-  // 4. Run migrations (to setup tables) in new org DB
   await runMigrationsOnOrgDb(dbName, dbHost, dbUser, dbPassword, dbPort);
 
   const serviceLocator = buildBeans()
 
-  // 5. Update the org row in main db with db connection info 
-  const updatedOrg = await updateOrganization(org.id, {dbHost,dbName,dbPassword,dbPort,dbUser}, serviceLocator);
+  const updatedOrg = await updateOrganization(org.id, { dbHost, dbName, dbPassword, dbPort, dbUser }, serviceLocator);
   return org;
 }

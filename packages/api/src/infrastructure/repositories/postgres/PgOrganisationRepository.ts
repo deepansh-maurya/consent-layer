@@ -4,28 +4,28 @@ import { Organization } from "../../../domain/organisation";
 import { IOrganisationRepository } from "../../../domain/repositories/IOrganisationRepository";
 import { prisma } from "../../db/prisma/prisma";
 
-
 export class PgOrganisationRepository implements IOrganisationRepository {
   async create(org: Organization): Promise<Organization> {
     const created = await prisma.organization.create({
       data: {
         id: org.id,
         name: org.name,
+        // TODO : add fields in db 
         createdAt: org.createdAt,
         updatedAt: org.updatedAt,
       },
     });
-    return new Organization(created.id, created.name, created.createdAt, created.updatedAt);
+    return new Organization(created.id, created.name, created.createdAt, created.updatedAt,created.slug);
   }
 
   async findById(id: string): Promise<Organization | null> {
     const found = await prisma.organization.findUnique({ where: { id } });
-    return found ? new Organization(found.id, found.name, found.createdAt, found.updatedAt) : null;
+    return found ? new Organization(found.id, found.name, found.createdAt, found.updatedAt,found.slug) : null;
   }
 
   async findByName(name: string): Promise<Organization | null> {
     const found = await prisma.organization.findUnique({ where: { name } });
-    return found ? new Organization(found.id, found.name, found.createdAt, found.updatedAt) : null;
+    return found ? new Organization(found.id, found.name, found.createdAt, found.updatedAt,found.slug) : null;
   }
 
   async update(org: Organization): Promise<Organization> {
@@ -36,7 +36,7 @@ export class PgOrganisationRepository implements IOrganisationRepository {
         updatedAt: org.updatedAt,
       },
     });
-    return new Organization(updated.id, updated.name, updated.createdAt, updated.updatedAt);
+    return new Organization(updated.id, updated.name, updated.createdAt, updated.updatedAt,updated.slug);
   }
 
   async delete(id: string): Promise<void> {
@@ -45,7 +45,7 @@ export class PgOrganisationRepository implements IOrganisationRepository {
 
   async list(): Promise<Organization[]> {
     const all = await prisma.organization.findMany();
-    return all.map(org => new Organization(org.id, org.name, org.createdAt, org.updatedAt));
+    return all.map(org => new Organization(org.id, org.name, org.createdAt, org.updatedAt,org.slug));
   }
 
   async findBySlug(slug: string): Promise<Organization | null> {

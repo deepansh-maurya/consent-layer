@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import { ClipboardList, FileEdit, ListChecks, Key, Copy, Trash, Plus, X } from "lucide-react";
+import {  Key, Copy, Trash, Plus, X } from "lucide-react";
 import Sidebar from "@/src/components/sidebar";
 
 // Interfaces for type safety
