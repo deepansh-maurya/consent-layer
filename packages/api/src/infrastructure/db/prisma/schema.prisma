@@ -21,21 +21,21 @@ model Organization {
   updated_at DateTime @updatedAt
 
   // Multitenancy: Org's DB connection info
-  dbName     String
-  dbHost     String
-  dbUser     String
-  dbPassword String
-  dbPort     Int?
-  dbSchema   String?
-  plan_id    String
-  plans      Plans         @relation(fields: [plan_id], references: [id])
-  slug       String?
-  url        String?
-  country    String?
-  admins     AdminUser[]
-  sdkConfigs SDKConfig[]
-  apiKeys    APIKey[]
-  sessions   UserSession[]
+  dbName           String
+  dbHost           String
+  dbUser           String
+  dbPassword       String
+  dbPort           Int?
+  dbSchema         String?
+  plan_id          String
+  plans            Plans              @relation(fields: [plan_id], references: [id])
+  slug             String?
+  url              String?
+  country          String?
+  admins           AdminUser[]
+  sdkConfigs       SDKConfig[]
+  apiKeys          APIKey[]
+  sessions         UserSession[]
   detectionHistory DetectionHistory[]
 }
 
@@ -94,84 +94,92 @@ model Plans {
   Organization Organization[]
 }
 
-
 model TrackerEntity {
   id          String   @id @default(uuid())
-  name        String   // "Google LLC", "Facebook, Inc.", etc.
-  displayName String?  // e.g., "Google"
+  name        String // "Google LLC", "Facebook, Inc.", etc.
+  displayName String? // e.g., "Google"
   aliases     String[] // Array of alternative names
   updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
 
-  properties  TrackerProperty[] // one-to-many: domains/properties owned
-  trakerPrevalance TrackerPrevalence[]
+  properties           TrackerProperty[] // one-to-many: domains/properties owned
+  trakerPrevalance     TrackerPrevalence[]
   conceptScriptPattern ConsentScriptPattern[]
 }
 
 model TrackerProperty {
-  id        String   @id @default(uuid())
-  domain    String   // e.g., "doubleclick.net"
-  entityId  String
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-  entity    TrackerEntity @relation(fields: [entityId], references: [id])
+  id                      String                  @id @default(uuid())
+  domain                  String // e.g., "doubleclick.net"
+  entityId                String
+  updatedAt               DateTime                @updatedAt
+  createdAt               DateTime                @default(now())
+  entity                  TrackerEntity           @relation(fields: [entityId], references: [id])
   customerPurposeOverride CustomPurposeOverride[]
 }
 
 model TrackerPrevalence {
-  id           String   @id @default(uuid())
-  domain       String   // e.g., "googletagmanager.com"
-  entityId     String?
-  prevalence   Float    // % or count (from your dataset)
-  cookies      Float?   // Number or rate of cookies set
-  fp           Float?   // Fingerprinting metric
-  source       String?  // Data origin (Disconnect, etc.)
-  updatedAt    DateTime @updatedAt
-  createdAt    DateTime @default(now())
-  entity       TrackerEntity? @relation(fields: [entityId], references: [id])
+  id         String         @id @default(uuid())
+  domain     String // e.g., "googletagmanager.com"
+  entityId   String?
+  prevalence Float // % or count (from your dataset)
+  cookies    Float? // Number or rate of cookies set
+  fp         Float? // Fingerprinting metric
+  source     String? // Data origin (Disconnect, etc.)
+  updatedAt  DateTime       @updatedAt
+  createdAt  DateTime       @default(now())
+  entity     TrackerEntity? @relation(fields: [entityId], references: [id])
 }
 
 model CustomPurposeOverride {
   id         String   @id @default(uuid())
-  orgId      String   // Organization using the override
-  propertyId String   // FK to TrackerProperty
-  purpose    String   // e.g., "Marketing", "Analytics", "Necessary"
-  notes      String?  // Admin comment or justification
+  orgId      String // Organization using the override
+  propertyId String // FK to TrackerProperty
+  purpose    String // e.g., "Marketing", "Analytics", "Necessary"
+  notes      String? // Admin comment or justification
   updatedAt  DateTime @updatedAt
   createdAt  DateTime @default(now())
 
-  property   TrackerProperty @relation(fields: [propertyId], references: [id])
+  property TrackerProperty @relation(fields: [propertyId], references: [id])
 }
 
 model DetectionHistory {
-  id            String   @id @default(uuid())
-  orgId         String   // Org/website scanned
-  detectedAt    DateTime // Scan timestamp
-  domain        String   // Domain/page scanned
+  id               String               @id @default(uuid())
+  orgId            String // Org/website scanned
+  detectedAt       DateTime // Scan timestamp
+  domain           String // Domain/page scanned
   matchedPatternId String // FK to ConsentScriptPattern
-  detectedBy    String?  // "crawler", "manual", etc.
-  rawEvidence   String?  // e.g., full script src or snippet
-  createdAt     DateTime @default(now())
-  organisation  Organization @relation(fields: [orgId],references: [id])
-  pattern       ConsentScriptPattern @relation(fields: [matchedPatternId], references: [id])
+  detectedBy       String? // "crawler", "manual", etc.
+  rawEvidence      String? // e.g., full script src or snippet
+  createdAt        DateTime             @default(now())
+  organisation     Organization         @relation(fields: [orgId], references: [id])
+  pattern          ConsentScriptPattern @relation(fields: [matchedPatternId], references: [id])
 }
 
 model FingerprintingMethod {
-  id        String   @id @default(uuid())
-  name      String   // e.g., "Navigator.prototype.userAgent"
-  prevalence Float   // How often it's used (from your dataset)
-  riskScore  Float   // Custom risk score if you want
+  id         String  @id @default(uuid())
+  name       String // e.g., "Navigator.prototype.userAgent"
+  prevalence Float // How often it's used (from your dataset)
+  riskScore  Float // Custom risk score if you want
   notes      String? // Additional context or explanation
 }
 
 model ConsentScriptPattern {
-  id         String   @id @default(uuid())
-  pattern    String   // Regex or URL pattern (e.g., "^https?://(www\\.)?googletagmanager\\.com/gtm\\.js")
-  category   String   // e.g., "Analytics", "Advertising", "Fingerprinting"
-  entityId   String?  // FK to TrackerEntity (optional, for linking)
-  source     String?  // Dataset or project origin, e.g., "Disconnect", "DuckDuckGo", "Mozilla"
-  updatedAt  DateTime @updatedAt
-  createdAt  DateTime @default(now())
+  id               String             @id @default(uuid())
+  pattern          String // Regex or URL pattern (e.g., "^https?://(www\\.)?googletagmanager\\.com/gtm\\.js")
+  category         String // e.g., "Analytics", "Advertising", "Fingerprinting"
+  entityId         String? // FK to TrackerEntity (optional, for linking)
+  source           String? // Dataset or project origin, e.g., "Disconnect", "DuckDuckGo", "Mozilla"
+  updatedAt        DateTime           @updatedAt
+  createdAt        DateTime           @default(now())
   detectionHistory DetectionHistory[]
-  entity     TrackerEntity? @relation(fields: [entityId], references: [id])
+  entity           TrackerEntity?     @relation(fields: [entityId], references: [id])
+}
+
+model ClonedRepo {
+  id           String   @id @default(ulid())
+  url          String
+  name         String
+  addsAt       DateTime
+  lastCommitId String
+  active       Boolean
 }
