@@ -31,8 +31,8 @@ export class PgApiKeyRepository implements IApiKeyRepository {
   }
 
   async listByOrg(orgId: string): Promise<APIKey[]> {
-    const all = await prisma.apiKey.findMany({ where: { orgId } });
-    return all.map(this.toDomain);
+      const all = await prisma.apiKey.findMany({ where: { orgId } });
+      return all.map(this.toDomain);
   }
 
   async update(id: string,data:APIKey): Promise<APIKey> {
