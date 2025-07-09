@@ -9,7 +9,7 @@ import fs from "node:fs"
 export class PgClonedRepoRpository implements IClonedRepoRepository {
 
     async create(clonedRepo: ClonedRepo): Promise<ClonedRepo> {
-        const baseDir = path.join(__dirname, './data')
+        const baseDir = path.join(__dirname, './data/tracker')
         const repoName = clonedRepo.name
         const localPath = path.join(baseDir, repoName);
 
@@ -27,7 +27,7 @@ export class PgClonedRepoRpository implements IClonedRepoRepository {
                 addsAt: clonedRepo.addsAt,
                 lastCommitId: clonedRepo.lastCommitId,
                 active: clonedRepo.active,
-                localPath: localPath
+                localPath: localPath //! no local path 
             }
         })
 
@@ -54,6 +54,7 @@ export class PgClonedRepoRpository implements IClonedRepoRepository {
     }
 
     async checkIfUpdate(clonedRepo: ClonedRepo): Promise<boolean> {
+        // TODO needs changes here in logic 
         const git = simpleGit(clonedRepo.localPath);
         await git.fetch();
         const localLog = await git.log(['-1']);

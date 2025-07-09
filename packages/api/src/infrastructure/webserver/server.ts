@@ -8,6 +8,7 @@ import apiKeyRouter from "../../interfaces/routes/ApiKey";
 import consentEventRouter from "../../interfaces/routes/ConsentEvent";
 import userSessionRouter from "../../interfaces/routes/UserSession";
 import { connectMongo } from "../db/mongoose/mongoose";
+import { MongoDb } from "../config/mongodb";
 
 // Add other route imports as needed
 
@@ -21,7 +22,7 @@ export async function init() {
   app.use(express.json());
 
   // Attach your service locator (dependency injection pattern)
-  app.locals = buildBeans();  
+  app.locals = buildBeans();
 
   // --- Register all routes ---
   app.use("/sdk-configs", sdkConfigRouter);
@@ -41,6 +42,7 @@ if (require.main === module) {
     const app = await init();
     const PORT = process.env.PORT || 5000;
     await connectMongo(process.env.MONGO_URL!)
+    new MongoDb(process.env.MONGO_CLUSTER_URL!)
     app.listen(PORT, () => {
       console.log(`ConsentLayer backend running on port ${PORT}`);
     });

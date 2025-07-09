@@ -36,10 +36,8 @@ model Organization {
   sdkConfigs       SDKConfig[]
   apiKeys          APIKey[]
   sessions         UserSession[]
-  detectionHistory DetectionHistory[]
 }
 
-// 2. AdminUser
 model AdminUser {
   id            String       @id @default(uuid())
   org_id        String
@@ -52,7 +50,6 @@ model AdminUser {
   organization  Organization @relation(fields: [org_id], references: [id])
 }
 
-// 3. SDKConfig
 model SDKConfig {
   id           String       @id @default(uuid())
   org_id       String
@@ -63,7 +60,6 @@ model SDKConfig {
   organization Organization @relation(fields: [org_id], references: [id])
 }
 
-// 4. APIKey
 model APIKey {
   id           String       @id @default(uuid())
   org_id       String
@@ -75,7 +71,6 @@ model APIKey {
   organization Organization @relation(fields: [org_id], references: [id])
 }
 
-// 5. UserSession
 model UserSession {
   id             String       @id @default(uuid())
   org_id         String
@@ -94,85 +89,69 @@ model Plans {
   Organization Organization[]
 }
 
-model TrackerEntity {
-  id          String   @id @default(uuid())
-  name        String // "Google LLC", "Facebook, Inc.", etc.
-  displayName String? // e.g., "Google"
-  aliases     String[] // Array of alternative names
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
 
-  properties           TrackerProperty[] // one-to-many: domains/properties owned
-  trakerPrevalance     TrackerPrevalence[]
-  conceptScriptPattern ConsentScriptPattern[]
+model Entity {
+  id            Int      @id @default(autoincrement())
+  name          String
+  displayName   String?
+  url           String?
+  privacyPolicy String?
+  prevalence    Float?
+  properties    String[] // domains owned by this entity
+
+  // Relations
+  domains       Domain[]
 }
 
-model TrackerProperty {
-  id                      String                  @id @default(uuid())
-  domain                  String // e.g., "doubleclick.net"
-  entityId                String
-  updatedAt               DateTime                @updatedAt
-  createdAt               DateTime                @default(now())
-  entity                  TrackerEntity           @relation(fields: [entityId], references: [id])
-  customerPurposeOverride CustomPurposeOverride[]
+model Domain {
+  id             Int        @id @default(autoincrement())
+  domain         String     @unique
+  prevalence     Float?
+  cookies        Float?
+  fingerprinting Int?       // 0-3
+  performance    Json?      // { cache, time, size, cpu }
+  categories     String[]
+  types          String[]
+  cnames         String[]
+  nameservers    String[]
+  ownerId        Int?
+  owner          Entity?    @relation(fields: [ownerId], references: [id])
+
+  // Relations
+  resources      Resource[]
 }
 
-model TrackerPrevalence {
-  id         String         @id @default(uuid())
-  domain     String // e.g., "googletagmanager.com"
-  entityId   String?
-  prevalence Float // % or count (from your dataset)
-  cookies    Float? // Number or rate of cookies set
-  fp         Float? // Fingerprinting metric
-  source     String? // Data origin (Disconnect, etc.)
-  updatedAt  DateTime       @updatedAt
-  createdAt  DateTime       @default(now())
-  entity     TrackerEntity? @relation(fields: [entityId], references: [id])
+model Resource {
+  id                 Int      @id @default(autoincrement())
+  domainId           Int
+  rule               String
+  cookies            Float?
+  fingerprinting     Int?
+  apis               String[]
+  prevalence         Float?
+  cnames             String[]
+  exampleSites       String[]
+  firstPartyCookies  Json?
+  firstPartyCookiesSent Json?
+
+  // Relations
+  domain             Domain   @relation(fields: [domainId], references: [id])
 }
 
-model CustomPurposeOverride {
-  id         String   @id @default(uuid())
-  orgId      String // Organization using the override
-  propertyId String // FK to TrackerProperty
-  purpose    String // e.g., "Marketing", "Analytics", "Necessary"
-  notes      String? // Admin comment or justification
-  updatedAt  DateTime @updatedAt
-  createdAt  DateTime @default(now())
-
-  property TrackerProperty @relation(fields: [propertyId], references: [id])
+model TrackingParameter {
+  paramName      String   @id
+  prevalence     Float?
+  requests3p     Json?    // { prevalence, entities, domains }
+  cookies        Json?    // { prevalence, firstParty, thirdParty, entities, domains }
+  exampleSites   String[]
 }
 
-model DetectionHistory {
-  id               String               @id @default(uuid())
-  orgId            String // Org/website scanned
-  detectedAt       DateTime // Scan timestamp
-  domain           String // Domain/page scanned
-  matchedPatternId String // FK to ConsentScriptPattern
-  detectedBy       String? // "crawler", "manual", etc.
-  rawEvidence      String? // e.g., full script src or snippet
-  createdAt        DateTime             @default(now())
-  organisation     Organization         @relation(fields: [orgId], references: [id])
-  pattern          ConsentScriptPattern @relation(fields: [matchedPatternId], references: [id])
-}
-
-model FingerprintingMethod {
-  id         String  @id @default(uuid())
-  name       String // e.g., "Navigator.prototype.userAgent"
-  prevalence Float // How often it's used (from your dataset)
-  riskScore  Float // Custom risk score if you want
-  notes      String? // Additional context or explanation
-}
-
-model ConsentScriptPattern {
-  id               String             @id @default(uuid())
-  pattern          String // Regex or URL pattern (e.g., "^https?://(www\\.)?googletagmanager\\.com/gtm\\.js")
-  category         String // e.g., "Analytics", "Advertising", "Fingerprinting"
-  entityId         String? // FK to TrackerEntity (optional, for linking)
-  source           String? // Dataset or project origin, e.g., "Disconnect", "DuckDuckGo", "Mozilla"
-  updatedAt        DateTime           @updatedAt
-  createdAt        DateTime           @default(now())
-  detectionHistory DetectionHistory[]
-  entity           TrackerEntity?     @relation(fields: [entityId], references: [id])
+model BreakageRule {
+  id          Int      @id @default(autoincrement())
+  rule        String
+  domains     String[]
+  types       String[]
+  reason      Json?
 }
 
 model ClonedRepo {

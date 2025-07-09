@@ -1,4 +1,4 @@
-import { MongoConsentEventRepository } from "../repositories/mongodb/PgConsentEventRepository";
+import { MongoConsentEventRepository } from "../repositories/mongodb/MdbConsentEventRepository";
 import { PgAdminUserRepository } from "../repositories/postgres/PgAdminUserRepository";
 import { PgApiKeyRepository } from "../repositories/postgres/PgApiKeyRepository";
 import { PgOrganisationRepository } from "../repositories/postgres/PgOrganisationRepository";
