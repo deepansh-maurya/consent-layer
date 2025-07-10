@@ -1,8 +1,6 @@
-// src/infrastructure/multitenancy/dbUtils.ts
 import { PrismaClient } from "@prisma/client";
 import { Client } from "pg";
 import { execSync } from "child_process";
-import { v4 as uuidv4 } from "uuid";
 
 /**
  * Creates a new Postgres database for an organization.

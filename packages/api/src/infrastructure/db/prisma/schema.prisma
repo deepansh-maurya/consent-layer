@@ -89,6 +89,12 @@ model Plans {
   Organization Organization[]
 }
 
+
+
+/**
+schema for preparing datatset 
+*/
+
 model Entity {
   id            Int      @id @default(autoincrement())
   name          String
@@ -153,6 +159,9 @@ model BreakageRule {
   reason      Json?
 }
 
+
+// /***/*****/******/*******/  //
+
 model ClonedRepo {
   id           String   @id @default(ulid())
   url          String
@@ -160,4 +169,113 @@ model ClonedRepo {
   addsAt       DateTime
   lastCommitId String
   active       Boolean
+}
+
+
+
+/** schema for crawling and storing results */  
+
+model ScanningSession {
+  id              String            @id @default(uuid())
+  orgId           String
+  createdAt       DateTime          @default(now())
+  startedBy       String
+  scanType        ScanType[]        // Enum, multiple scan types possible
+  startUrls       String[]          // List of URLs
+  scanDepth       Int?              // Nullable for unlimited
+  maxPages        Int?              // Nullable for unlimited
+  status          ScanStatus
+  progressScanned Int               @default(0)
+  progressQueued  Int               @default(0)
+  progressFailed  Int               @default(0)
+  progressPending Int               @default(0)
+  settings        Json              // Custom settings (rate limit, user agent, etc.)
+  results         PageScanResult[]
+  failedPages     FailedPage[]
+  authRequests    AuthRequest[]
+  reportUrl       String?
+  finishedAt      DateTime?
+
+  @@map("scanning_sessions")
+}
+
+enum ScanType {
+  COOKIE_CONCENT
+  PRIVACY_LINKS
+  TRACKERS_DETECTIon
+  ADMIN_SECURITY
+  HTTP_SSL
+  COOKIE_FLAGS
+}
+
+enum ScanStatus {
+  RUNNING
+  PAUSED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model PageScanResult {
+  id               String        @id @default(uuid())
+  scanningSession  ScanningSession @relation(fields: [scanningSessionId], references: [id])
+  scanningSessionId String
+  url              String
+  statusCode       Int
+  parentUrl        String?
+  depth            Int
+  scanResult       Json          // Compliance, consent banner, privacy, etc.
+  trackers         Json          // Array of tracker info
+  securityIssues   Json          // Array of security issues
+  complianceIssues Json          // Array of compliance issues
+  cookies          Json          // Array of cookies
+  screenshotUrl    String?
+  timeTakenMs      Int
+  scannedAt        DateTime
+
+  @@map("page_scan_results")
+}
+
+model FailedPage {
+  id                String           @id @default(uuid())
+  scanningSession   ScanningSession  @relation(fields: [scanningSessionId], references: [id])
+  scanningSessionId String
+  url               String
+  failReason        FailReason
+  attempts          Int              @default(1)
+  lastAttemptAt     DateTime
+  message           String?
+  parentUrl         String?
+
+  @@map("failed_pages")
+}
+
+enum FailReason {
+  TIMEOUT
+  AUTH_REQUIRED
+  BLOCKED
+  TWO_FACTOR
+  ERROR
+  NOT_FOUND
+  OTHER
+}
+
+model AuthRequest {
+  id                String           @id @default(uuid())
+  scanningSession   ScanningSession  @relation(fields: [scanningSessionId], references: [id])
+  scanningSessionId String
+  url               String
+  reason            String
+  requestedAt       DateTime
+  providedBy        String?
+  providedAt        DateTime?
+  status            AuthRequestStatus
+
+  @@map("auth_requests")
+}
+
+enum AuthRequestStatus {
+  PENDING
+  PROVIDED
+  SKIPPED
 }

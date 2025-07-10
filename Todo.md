@@ -1,7 +1,3 @@
-
-
-
-
 create structure for the plans table 
 add logic to handle plan activation and bought one \
 
