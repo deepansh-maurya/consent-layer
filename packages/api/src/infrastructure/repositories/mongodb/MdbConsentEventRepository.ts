@@ -1,9 +1,6 @@
-// /infrastructure/repositories/MongoConsentEventRepository.ts
-
 import { ConsentEvent } from "../../../domain/consent_event";
 import { IConsentEventRepository } from "../../../domain/repositories/IConsentEventRepository";
 import { ConsentEventModel } from "../../db/mongoose/schemas/ConsentEvent";
-
 
 export class MongoConsentEventRepository implements IConsentEventRepository {
   async logEvent(event: ConsentEvent): Promise<ConsentEvent> {
@@ -17,7 +14,7 @@ export class MongoConsentEventRepository implements IConsentEventRepository {
       eventType: event.eventType,
     });
     return this.toDomain(created);
-  }
+  }                           
 
   async findByOrg(orgId: string): Promise<ConsentEvent[]> {
     const events = await ConsentEventModel.find({ orgId }).exec();
