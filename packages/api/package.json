@@ -12,6 +12,7 @@
   "author": "Deepansh",
   "license": "MIT",
   "dependencies": {
+    "@chroma-core/default-embed": "^0.1.8",
     "@prisma/client": "^6.8.2",
     "@types/chokidar": "^1.7.5",
     "@types/cors": "^2.8.19",
@@ -20,6 +21,7 @@
     "@types/pg": "^8.15.4",
     "@types/uuid": "^10.0.0",
     "chokidar": "^4.0.3",
+    "chromadb": "^3.0.9",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

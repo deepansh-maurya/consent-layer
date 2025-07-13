@@ -12,7 +12,6 @@ import { MongoDb } from "../config/mongodb";
 
 // Add other route imports as needed
 
-
 // --- Create and configure Express server ---
 export async function init() {
   const app = express();

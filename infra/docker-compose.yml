@@ -25,10 +25,21 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: secret
+    command: ["--replSet", "rs0"]
     ports:
       - "27017:27017"
     volumes:
       - mongodata:/data/db
+
+  chroma:
+    image: chromadb/chroma
+    container_name: chroma-server
+    command: run --path /chroma/.chroma/index
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma-data:/chroma/.chroma/index
+    restart: unless-stopped
 
 volumes:
   pgdata:

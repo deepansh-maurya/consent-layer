@@ -14,6 +14,8 @@ export async function createScanningSessionController(req: Request, res: Respons
     const session = await createScanningSession(
       orgId, startedBy, scanType, startUrls, scanDepth, maxPages, settings, serviceLocator
     );
+    // publish kafka to scan based on the details 
+    //  
     res.status(201).json(session);
   } catch (e) {
     res.status(400).json({ error: (e as Error).message });
