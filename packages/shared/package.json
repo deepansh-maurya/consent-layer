@@ -1,0 +1,13 @@
+{
+  "name": "@repo/shared",
+  "exports": {
+    "./type": "./src/types.ts",
+    "./browser": "./src/config/playright.ts"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.54.1"
+  }
+}
