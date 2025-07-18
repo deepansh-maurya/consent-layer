@@ -5,6 +5,8 @@ import updateOrganization from "@/src/application/use_cases/organisation/update"
 import { Organization } from "@/src/domain/organisation";
 import { buildBeans } from "@/src/infrastructure/config/service-locator";
 
+import {ScanType} from '@repo/shared/type'
+
 export class OrganisationHandler {
 
     // Create organization

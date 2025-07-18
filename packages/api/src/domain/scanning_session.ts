@@ -1,13 +1,6 @@
 // src/domain/ScanningSession.ts
 
-export enum ScanType {
-  COOKIE_CONCENT=" COOKIE_CONCENT",
-  PRIVACY_LINKS=" PRIVACY_LINKS",
-  TRACKERS_DETECTIon=" TRACKERS_DETECTIon",
-  ADMIN_SECURITY=" ADMIN_SECURITY",
-  HTTP_SSL=" HTTP_SSL",
-  COOKIE_FLAGS=" COOKIE_FLAGS",
-}
+import {ScanType} from "@repo/shared/type"
 
 export enum ScanStatus {
   RUNNING="RUNNING",

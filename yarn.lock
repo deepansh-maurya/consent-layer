@@ -229,11 +229,15 @@
 
 "@kwsites/file-exists@^1.1.1":
   version "1.1.1"
+  resolved "https://registry.npmjs.org/@kwsites/file-exists/-/file-exists-1.1.1.tgz"
+  integrity sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==
   dependencies:
     debug "^4.1.1"
 
 "@kwsites/promise-deferred@^1.1.1":
   version "1.1.1"
+  resolved "https://registry.npmjs.org/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz"
+  integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
 "@mongodb-js/saslprep@^1.1.9":
   version "1.2.2"
@@ -433,6 +437,10 @@
 "@repo/eslint-config@*", "@repo/eslint-config@file:D:\\consent layer\\packages\\eslint-config":
   version "0.0.0"
   resolved "file:packages/eslint-config"
+
+"@repo/shared@*", "@repo/shared@file:D:\\consent layer\\packages\\shared":
+  version "1.0.0"
+  resolved "file:packages/shared"
 
 "@repo/typescript-config@*", "@repo/typescript-config@file:D:\\consent layer\\packages\\typescript-config":
   version "0.0.0"
@@ -1525,6 +1533,7 @@ cookie@^0.7.1:
     pg "^8.16.0"
     playwright "^1.54.0"
     redis "^5.6.0"
+    simple-git "^3.28.0"
     ts-node "^10.9.2"
     typescript "^5.8.3"
     uuid "^11.1.0"
@@ -4010,17 +4019,17 @@ platform@^1.3.6:
   resolved "https://registry.npmjs.org/platform/-/platform-1.3.6.tgz"
   integrity sha512-fnWVljUchTro6RiCFvCXBbNhJc2NijN7oIQxbwsyL0buWJPG85v81ehlHI9fXrJsMNgTofEoWIQeClKpgxFLrg==
 
-playwright-core@1.54.0:
-  version "1.54.0"
-  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.54.0.tgz"
-  integrity sha512-uiWpWaJh3R3etpJ0QrpligEMl62Dk1iSAB6NUXylvmQz+e3eipXHDHvOvydDAssb5Oqo0E818qdn0L9GcJSTyA==
+playwright-core@1.54.1:
+  version "1.54.1"
+  resolved "https://registry.npmjs.org/playwright-core/-/playwright-core-1.54.1.tgz"
+  integrity sha512-Nbjs2zjj0htNhzgiy5wu+3w09YetDx5pkrpI/kZotDlDUaYk0HVA5xrBVPdow4SAUIlhgKcJeJg4GRKW6xHusA==
 
-playwright@^1.54.0:
-  version "1.54.0"
-  resolved "https://registry.npmjs.org/playwright/-/playwright-1.54.0.tgz"
-  integrity sha512-y9yzHmXRwEUOpghM7XGcA38GjWuTOUMaTIcm/5rHcYVjh5MSp9qQMRRMc/+p1cx+csoPnX4wkxAF61v5VKirxg==
+playwright@^1.54.0, playwright@^1.54.1:
+  version "1.54.1"
+  resolved "https://registry.npmjs.org/playwright/-/playwright-1.54.1.tgz"
+  integrity sha512-peWpSwIBmSLi6aW2auvrUtf2DqY16YYcCMO8rTVx486jKmDTJg7UAhyrraP98GB8BoPURZP8+nxO7TSd4cPr5g==
   dependencies:
-    playwright-core "1.54.0"
+    playwright-core "1.54.1"
   optionalDependencies:
     fsevents "2.3.2"
 
@@ -4430,6 +4439,10 @@ safe-regex-test@^1.0.3, safe-regex-test@^1.1.0:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
+"scan_worker@file:D:\\consent layer\\packages\\scan_worker":
+  version "1.0.0"
+  resolved "file:packages/scan_worker"
+
 scheduler@^0.26.0:
   version "0.26.0"
   resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.26.0.tgz"
@@ -4625,6 +4638,15 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   version "3.0.7"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+simple-git@^3.28.0:
+  version "3.28.0"
+  resolved "https://registry.npmjs.org/simple-git/-/simple-git-3.28.0.tgz"
+  integrity sha512-Rs/vQRwsn1ILH1oBUy8NucJlXmnnLeLCfcvbSehkPzbv3wwoFWIdtfd6Ndo6ZPhlPsCZ60CPI4rxurnwAa+a2w==
+  dependencies:
+    "@kwsites/file-exists" "^1.1.1"
+    "@kwsites/promise-deferred" "^1.1.1"
+    debug "^4.4.0"
 
 simple-swizzle@^0.2.2:
   version "0.2.2"

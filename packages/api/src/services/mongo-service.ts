@@ -35,7 +35,7 @@ export class MongoService extends MongoDb {
                 });
 
                 (await ChromaService.getInstance()).upsert(
-                    [newDoc._id.toString()],
+                    [newDoc._id.toString()], 
                     [strForChromaCollection],
                     [newDoc])
             }

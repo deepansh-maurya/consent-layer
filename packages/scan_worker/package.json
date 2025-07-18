@@ -1,0 +1,6 @@
+{
+  "name": "scan_worker",
+  "version": "1.0.0",
+  "main": "worker.js",
+  "license": "MIT"
+}
