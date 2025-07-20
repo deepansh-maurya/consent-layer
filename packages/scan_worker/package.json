@@ -2,5 +2,8 @@
   "name": "scan_worker",
   "version": "1.0.0",
   "main": "worker.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@repo/shared": "^1.0.0"
+  }
 }
