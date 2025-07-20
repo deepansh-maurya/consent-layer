@@ -3,7 +3,8 @@
   "exports": {
     "./type": "./src/types.ts",
     "./browser": "./src/config/playright.ts",
-    "./kafka": "./src/config/kafka.ts"
+    "./kafka": "./src/config/kafka.ts",
+    "./enums":"./src/enum.ts"
   },
   "version": "1.0.0",
   "main": "index.js",

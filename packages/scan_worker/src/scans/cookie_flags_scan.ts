@@ -12,3 +12,5 @@
 
  Metrics, job timeouts, region/user-agent, robots.txt (shared)
  */
+
+ export default  class COOKIE_FLAGS{}

@@ -13,3 +13,6 @@
 
  Region/user-agent logic, job timeouts, metrics, robots.txt (shared)
  */
+
+
+ export default  class TRACKERS_DETECTION {}

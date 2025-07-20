@@ -12,3 +12,8 @@
 
  Metrics, job timeouts, robots.txt (shared)
  */
+
+
+ export default class ADMIN_SECURITY_SCAN {
+    
+ } 

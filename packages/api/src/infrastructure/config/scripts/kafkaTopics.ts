@@ -1,8 +1,9 @@
+import { KafkaTopics } from "@repo/shared/enums";
 import kafka from "@repo/shared/kafka"
+
 const topics = [
-    { topic: "scan-jobs", numPartitions: 10, replicationFactor: 2 },
-    { topic: "analytics-jobs", numPartitions: 10, replicationFactor: 2 },
-    { topic: "audit-events", numPartitions: 10, replicationFactor: 2 },
+    { topic: KafkaTopics.scan_tasks, numPartitions: 10, replicationFactor: 2 },
+    { topic: KafkaTopics.split_scans, numPartitions: 10, replicationFactor: 2 },
 ];
 
 async function run() {

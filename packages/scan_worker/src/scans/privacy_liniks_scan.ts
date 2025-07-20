@@ -14,3 +14,5 @@
 
  Region/user-agent logic, job timeouts, metrics, robots.txt (shared with other scans)
  */
+
+ export default class PRIVACY_LINKS{}

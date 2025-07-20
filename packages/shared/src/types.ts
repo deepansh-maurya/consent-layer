@@ -7,3 +7,13 @@ export enum ScanType {
     HTTP_SSL = ' HTTP_SSL',
     COOKIE_FLAGS = ' COOKIE_FLAGS',
 }
+
+export interface ScanBatchRequest {
+    startUrl: string;
+    scanDepth: number;
+    specificPages: string[];
+    scanType: string[] | string;
+    regions: string[];
+    userAgent: string;
+    metaData: any;
+}
