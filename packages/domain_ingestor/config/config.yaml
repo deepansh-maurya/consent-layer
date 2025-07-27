@@ -1,0 +1,4 @@
+mongo_uri: "mongodb://localhost:27017"
+db_name: "cookie_scan"
+collection: "popups"
+csv_path: "../tranco_7NX9X.csv"

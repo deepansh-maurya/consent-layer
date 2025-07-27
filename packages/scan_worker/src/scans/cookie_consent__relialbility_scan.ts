@@ -63,8 +63,6 @@ Any pages where banner does NOT show but should?
  Detect if banner can be bypassed/skipped
 
  Attach screenshots for outlier/missing cases
-
-
   */
 
 

@@ -1,0 +1,11 @@
+FROM golang:1.22 as build 
+WORKDIR /app
+COPY . .
+RUN go build -o ingestor ./cmd/main.go
+
+FROM debain:stable-slim
+WORKDIR /app
+COPY --from=build /app/ingestor .
+COPY config/config.yaml ./config/config.yaml
+
+CMD [ "./ingestor" ]

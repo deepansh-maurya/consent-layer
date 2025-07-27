@@ -71,6 +71,16 @@ services:
     ports:
       - "6379:6379"
 
+  domain-ingestor:
+    build:
+      context: ../packages/domain-ingestor
+    container_name: domain-ingester
+    restart: always
+    volumes:
+      - ./config:/app/config               # assumes config.yaml lives in ./config
+    depends_on:
+      - mongo     
+
 volumes:
   pgdata:
   mongodata:
